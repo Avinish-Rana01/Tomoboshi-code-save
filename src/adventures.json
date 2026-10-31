@@ -1,0 +1,30 @@
+{
+  "featuredAdventure": {
+    "id": "sonoma-wine-trail",
+    "kicker": "ADVENTURE PASS",
+    "title": "Sonoma Wine Trail",
+    "status": "not-started",
+    "statusLabel": "Not Started",
+    "location": "Sonoma, CA",
+    "descriptionLines": [
+      "Visit 5 wineries and capture all flags",
+      "You must physically be there."
+    ],
+    "description": "Visit 5 wineries and capture all flags. You must physically be there.",
+    "validText": "Valid: Jan 20-Feb 1",
+    "dateRange": "Jan 20 – Feb 1",
+    "startDateShort": "JAN 20",
+    "endDateShort": "FEB 1",
+    "capturedFlags": 0,
+    "totalFlags": 5,
+    "flagsLabel": "0 / 5 flags captured",
+    "flagsShortLabel": "0 / 5 flags",
+    "stops": [
+      "Buena Vista",
+      "Gundlach",
+      "Scribe",
+      "Bartholomew",
+      "Hamel"
+    ]
+  }
+}

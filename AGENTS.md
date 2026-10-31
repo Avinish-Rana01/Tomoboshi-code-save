@@ -34,6 +34,11 @@ This project uses **Tailwind CSS v4** through the `@tailwindcss/vite` plugin con
 
 `src/main.tsx` imports `src/index.css`, so global font wiring belongs in `src/index.css`. Keep CSS `@import` statements first, then add any `@font-face` rules and font-family defaults there.
 
+## Project Scope & UI-First Rule
+
+- **Pure Mobile App UI**: This project is strictly a mobile application UI/UX design prototype in React. Do NOT add complex application/backend logic, unnecessary business layers, or heavy infrastructure.
+- **Designing in React**: All design work is done directly in React + Tailwind CSS / CSS. Focus 100% on delivering gorgeous, pixel-perfect, polished mobile layouts, typography, micro-interactions, animations, and visual styling.
+
 ## Code quality
 
 - Use double quotes for strings containing apostrophes (`"We're here to help"`), or escape them in single-quoted strings. An unescaped apostrophe in a single-quoted string breaks the build.

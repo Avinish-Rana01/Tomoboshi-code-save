@@ -1,4 +1,5 @@
 import { useEffect, useState, type CSSProperties } from "react"
+import adventuresData from "./adventures.json"
 
 const assetPathPrefix = "/assets"
 const successTick = `${assetPathPrefix}/504be.png`
@@ -359,6 +360,429 @@ function MapScreen({
 
 type AdventureStatus = "not-started" | "in-progress" | "completed"
 
+function FlagGlyph({ size = 12 }: { size?: number }) {
+  return (
+    <svg aria-hidden="true" fill="none" height={size} viewBox="0 0 16 16" width={size}>
+      <path d="M4 14.5V2" stroke="currentColor" strokeLinecap="round" strokeWidth="1.6" />
+      <path
+        d="M4 2.5h7.6l-1.6 2.75 1.6 2.75H4"
+        fill="currentColor"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth="1.2"
+      />
+    </svg>
+  )
+}
+
+function CalendarGlyph() {
+  return (
+    <svg aria-hidden="true" fill="none" height="12" viewBox="0 0 16 16" width="12">
+      <rect height="11" rx="2.5" stroke="currentColor" strokeWidth="1.4" width="12" x="2" y="3" />
+      <path d="M2 7h12M5.5 1.5v3M10.5 1.5v3" stroke="currentColor" strokeLinecap="round" strokeWidth="1.4" />
+    </svg>
+  )
+}
+
+function PinGlyph() {
+  return (
+    <svg aria-hidden="true" fill="none" height="12" viewBox="0 0 16 16" width="12">
+      <path
+        d="M8 14.5s4.5-4.2 4.5-7.9A4.5 4.5 0 0 0 3.5 6.6c0 3.7 4.5 7.9 4.5 7.9Z"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth="1.4"
+      />
+      <circle cx="8" cy="6.5" fill="currentColor" r="1.6" />
+    </svg>
+  )
+}
+
+function WineGlyph() {
+  return (
+    <svg aria-hidden="true" fill="none" height="22" viewBox="0 0 24 24" width="22">
+      <path
+        d="M7 2.5h10c.4 4.6-.9 8.6-5 9-4.1-.4-5.4-4.4-5-9Z"
+        fill="currentColor"
+        fillOpacity=".22"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth="1.6"
+      />
+      <path d="M7.4 6.5h9.2M12 11.5v9M8 21h8" stroke="currentColor" strokeLinecap="round" strokeWidth="1.6" />
+    </svg>
+  )
+}
+
+function AdventureCardVariations() {
+  const adventure = adventuresData.featuredAdventure
+  const flags = Array.from({ length: adventure.totalFlags }, (_, i) => i)
+
+  return (
+    <div className="av-list">
+      {/* Variation 1 — Glass + segmented progress */}
+      <p className="av-label">Variation 1 · Glass Progress</p>
+      <article className="av-card av-glass">
+        <div className="av-glass-top">
+          <h2>{adventure.title}</h2>
+          <span className="av-chip-muted">
+            <i /> {adventure.statusLabel}
+          </span>
+        </div>
+        <p className="av-glass-desc">
+          {adventure.descriptionLines[0]}.
+          <br />
+          {adventure.descriptionLines[1]}
+        </p>
+        <div
+          className="av-segments"
+          aria-label={`${adventure.capturedFlags} of ${adventure.totalFlags} flags captured`}
+        >
+          {flags.map((f) => (
+            <span key={f} />
+          ))}
+        </div>
+        <div className="av-glass-foot">
+          <span>
+            <CalendarGlyph /> {adventure.dateRange}
+          </span>
+          <span>
+            <FlagGlyph size={11} /> {adventure.flagsShortLabel}
+          </span>
+        </div>
+      </article>
+
+      {/* Variation 2 — Boarding pass ticket */}
+      <p className="av-label">Variation 2 · Adventure Pass</p>
+      <article className="av-card av-ticket">
+        <div className="av-ticket-main">
+          <span className="av-ticket-kicker">{adventure.kicker}</span>
+          <h2>{adventure.title}</h2>
+          <p>{adventure.description}</p>
+          <div className="av-ticket-flags">
+            {flags.map((f) => (
+              <span key={f}>
+                <FlagGlyph size={11} />
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="av-ticket-stub">
+          <span>VALID</span>
+          <strong>{adventure.startDateShort}</strong>
+          <em>to</em>
+          <strong>{adventure.endDateShort}</strong>
+          <small>
+            {adventure.capturedFlags}/{adventure.totalFlags}
+          </small>
+        </div>
+      </article>
+
+      {/* Variation 3 — Midnight gold */}
+      <p className="av-label">Variation 3 · Midnight Gold</p>
+      <article className="av-card av-dark">
+        <div className="av-dark-glow" aria-hidden="true" />
+        <div className="av-dark-row">
+          <span className="av-dark-icon">
+            <WineGlyph />
+          </span>
+          <div className="av-dark-title">
+            <h2>{adventure.title}</h2>
+            <span>
+              <i /> {adventure.statusLabel}
+            </span>
+          </div>
+          <div className="av-ring">
+            <strong>{adventure.capturedFlags}</strong>
+            <small>/{adventure.totalFlags}</small>
+          </div>
+        </div>
+        <p className="av-dark-desc">{adventure.description}</p>
+        <div className="av-dark-foot">
+          <span>
+            <CalendarGlyph /> Valid {adventure.dateRange}
+          </span>
+          <span className="av-dark-cta">Start ›</span>
+        </div>
+      </article>
+
+      {/* Variation 4 — Hero banner */}
+      <p className="av-label">Variation 4 · Hero Banner</p>
+      <article className="av-card av-hero">
+        <div className="av-hero-banner">
+          <div className="av-hero-hills" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
+          <span className="av-hero-badge">
+            <i /> {adventure.statusLabel}
+          </span>
+          <span className="av-hero-pin">
+            <PinGlyph /> {adventure.location}
+          </span>
+        </div>
+        <div className="av-hero-body">
+          <h2>{adventure.title}</h2>
+          <p>{adventure.description}</p>
+          <div className="av-hero-chips">
+            <span>
+              <CalendarGlyph /> {adventure.dateRange}
+            </span>
+            <span>
+              <FlagGlyph size={11} /> {adventure.flagsShortLabel}
+            </span>
+          </div>
+        </div>
+      </article>
+
+      {/* Variation 5 — Clean white + flag path */}
+      <p className="av-label">Variation 5 · Flag Path</p>
+      <article className="av-card av-path">
+        <div className="av-path-head">
+          <span className="av-path-icon">
+            <WineGlyph />
+          </span>
+          <div>
+            <h2>{adventure.title}</h2>
+            <p>
+              <CalendarGlyph /> Valid {adventure.dateRange}
+            </p>
+          </div>
+          <span className="av-chip-muted">
+            <i /> {adventure.statusLabel}
+          </span>
+        </div>
+        <p className="av-path-desc">{adventure.description}</p>
+        <div className="av-path-track">
+          {flags.map((f) => (
+            <span key={f} className="av-path-node">
+              <FlagGlyph size={11} />
+            </span>
+          ))}
+        </div>
+        <div className="av-path-foot">
+          <span>{adventure.flagsLabel}</span>
+          <button type="button">Start Adventure</button>
+        </div>
+      </article>
+
+      {/* Variation 6 — Tactile Skeuomorphic Gold Plaque */}
+      <p className="av-label">Variation 6 · Tactile Gold Plaque</p>
+      <article className="av-card av-plaque">
+        <div className="av-plaque-sheen" aria-hidden="true" />
+        <div className="av-plaque-head">
+          <div>
+            <span className="av-plaque-eyebrow">
+              <PinGlyph /> {adventure.location}
+            </span>
+            <h2>{adventure.title}</h2>
+          </div>
+          <span className="av-plaque-status">
+            <i /> {adventure.statusLabel}
+          </span>
+        </div>
+        <div className="av-plaque-copy">
+          <p>{adventure.descriptionLines[0]}</p>
+          <p>{adventure.descriptionLines[1]}</p>
+        </div>
+        <div className="av-plaque-well" aria-label={adventure.flagsLabel}>
+          {adventure.stops.map((stop, idx) => (
+            <div key={stop} className="av-plaque-socket">
+              <span className="av-plaque-coin">
+                <FlagGlyph size={11} />
+              </span>
+              <small>#{idx + 1}</small>
+            </div>
+          ))}
+        </div>
+        <div className="av-plaque-foot">
+          <span>
+            <CalendarGlyph /> {adventure.validText}
+          </span>
+          <strong>{adventure.flagsLabel}</strong>
+        </div>
+      </article>
+
+      {/* Variation 7 — Topographic Trail Map Card */}
+      <p className="av-label">Variation 7 · Topographic Trail Map</p>
+      <article className="av-card av-topo">
+        <svg
+          aria-hidden="true"
+          className="av-topo-lines"
+          fill="none"
+          preserveAspectRatio="none"
+          viewBox="0 0 360 170"
+        >
+          <path
+            d="M-20 35C45 10 95 65 165 40C235 15 290 55 380 25"
+            stroke="currentColor"
+            strokeWidth="1"
+          />
+          <path
+            d="M-20 85C60 55 120 115 195 80C270 45 310 95 380 70"
+            stroke="currentColor"
+            strokeWidth="1"
+          />
+          <path
+            d="M-20 135C50 110 140 155 220 120C290 90 330 140 380 115"
+            stroke="currentColor"
+            strokeWidth="1"
+          />
+        </svg>
+        <div className="av-topo-top">
+          <div>
+            <h2>{adventure.title}</h2>
+            <p>{adventure.descriptionLines[0]}</p>
+            <p className="av-topo-sub">{adventure.descriptionLines[1]}</p>
+          </div>
+          <span className="av-topo-pill">
+            <i /> {adventure.statusLabel}
+          </span>
+        </div>
+        <div className="av-topo-route">
+          <svg
+            aria-hidden="true"
+            className="av-topo-curve"
+            fill="none"
+            preserveAspectRatio="none"
+            viewBox="0 0 300 32"
+          >
+            <path
+              d="M16 16 C 65 2, 95 30, 150 16 C 205 2, 235 30, 284 16"
+              stroke="#d9b23c"
+              strokeDasharray="4 4"
+              strokeLinecap="round"
+              strokeWidth="2"
+            />
+          </svg>
+          {adventure.stops.map((stop, idx) => (
+            <div key={stop} className="av-topo-stop">
+              <span>{idx === adventure.totalFlags - 1 ? <FlagGlyph size={11} /> : idx + 1}</span>
+              <small>{stop}</small>
+            </div>
+          ))}
+        </div>
+        <div className="av-topo-foot">
+          <span>{adventure.validText}</span>
+          <span className="av-topo-counter">{adventure.flagsLabel}</span>
+        </div>
+      </article>
+
+      {/* Variation 8 — Asymmetric Bento Grid Card */}
+      <p className="av-label">Variation 8 · Split Bento Stack</p>
+      <article className="av-bento">
+        <div className="av-bento-main">
+          <div className="av-bento-badge-row">
+            <span className="av-bento-emblem">
+              <WineGlyph />
+            </span>
+            <span className="av-bento-loc">
+              <PinGlyph /> {adventure.location}
+            </span>
+          </div>
+          <h2>{adventure.title}</h2>
+          <p>{adventure.descriptionLines[0]}</p>
+          <p className="av-bento-note">{adventure.descriptionLines[1]}</p>
+          <div className="av-bento-date">
+            <CalendarGlyph /> {adventure.validText}
+          </div>
+        </div>
+        <div className="av-bento-side">
+          <div className="av-bento-score">
+            <span className="av-bento-score-label">FLAGS</span>
+            <strong>
+              {adventure.capturedFlags}
+              <small>/{adventure.totalFlags}</small>
+            </strong>
+            <div className="av-bento-pips">
+              {flags.map((f) => (
+                <span key={f} />
+              ))}
+            </div>
+            <span className="av-bento-score-sub">captured</span>
+          </div>
+          <div className="av-bento-status">
+            <span className="av-bento-dot" />
+            <div>
+              <small>Status</small>
+              <strong>{adventure.statusLabel}</strong>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      {/* Variation 9 — Vintage Vineyard Passport Stamp */}
+      <p className="av-label">Variation 9 · Vineyard Passport</p>
+      <article className="av-card av-stamp">
+        <div className="av-stamp-frame">
+          <div className="av-stamp-seal" aria-hidden="true">
+            <span>SONOMA</span>
+            <strong>
+              {adventure.capturedFlags}/{adventure.totalFlags}
+            </strong>
+            <span>FLAGS</span>
+          </div>
+          <span className="av-stamp-status">
+            <i /> {adventure.statusLabel}
+          </span>
+          <h2>{adventure.title}</h2>
+          <p className="av-stamp-desc">
+            {adventure.descriptionLines[0]} · {adventure.descriptionLines[1]}
+          </p>
+          <div className="av-stamp-grid">
+            {adventure.stops.map((stop, idx) => (
+              <div key={stop} className="av-stamp-box">
+                <FlagGlyph size={11} />
+                <span>0{idx + 1}</span>
+              </div>
+            ))}
+          </div>
+          <div className="av-stamp-foot">
+            <span>{adventure.validText}</span>
+            <span>{adventure.flagsLabel}</span>
+          </div>
+        </div>
+      </article>
+
+      {/* Variation 10 — Obsidian Glass & Gold Ribbon */}
+      <p className="av-label">Variation 10 · Obsidian &amp; Gold Ribbon</p>
+      <article className="av-card av-obsidian">
+        <div className="av-obsidian-ribbon">
+          <span>
+            <CalendarGlyph /> {adventure.validText}
+          </span>
+          <span className="av-obsidian-status">
+            <i /> {adventure.statusLabel}
+          </span>
+        </div>
+        <div className="av-obsidian-body">
+          <div className="av-obsidian-head">
+            <div>
+              <h2>{adventure.title}</h2>
+              <p>{adventure.descriptionLines[0]}</p>
+              <p className="av-obsidian-sub">{adventure.descriptionLines[1]}</p>
+            </div>
+            <span className="av-obsidian-crest">
+              <WineGlyph />
+            </span>
+          </div>
+          <div className="av-obsidian-bar">
+            <div className="av-obsidian-slots">
+              {flags.map((f) => (
+                <span key={f}>
+                  <FlagGlyph size={10} />
+                </span>
+              ))}
+            </div>
+            <strong>{adventure.flagsLabel}</strong>
+          </div>
+        </div>
+      </article>
+    </div>
+  )
+}
+
 function AdventureScreen({
   onOpenLeaderboard,
   onOpenMap,
@@ -369,6 +793,7 @@ function AdventureScreen({
   onOpenProfile: () => void
 }) {
   const [status, setStatus] = useState<AdventureStatus>("not-started")
+  const adventure = adventuresData.featuredAdventure
 
   const statusTabs: { id: AdventureStatus label: string }[] = [
     { id: "not-started", label: "Not Started" },
@@ -455,21 +880,26 @@ function AdventureScreen({
         {status === "not-started" ? (
           <article className="adventure-card">
             <div className="adventure-card-header">
-              <h2>Sonoma Wine Trail</h2>
+              <h2>{adventure.title}</h2>
               <p>
                 <img alt="" height="4" src={statusDot} width="4" />
-                <span>Not Started</span>
+                <span>{adventure.statusLabel}</span>
               </p>
             </div>
             <div className="adventure-card-description">
-              <p>Visit 5 wineries and capture all flags</p>
-              <p>You must physically be there.</p>
+              {adventure.descriptionLines.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
             </div>
             <div className="adventure-card-footer">
-              <p>Valid: Jan 20-Feb 1</p>
-              <p>0 / 5 flags captured</p>
+              <p>{adventure.validText}</p>
+              <p>{adventure.flagsLabel}</p>
             </div>
           </article>
+        ) : null}
+
+        {status === "not-started" ? (
+          <AdventureCardVariations />
         ) : (
           <p className="adventure-empty">No adventures here yet.</p>
         )}
