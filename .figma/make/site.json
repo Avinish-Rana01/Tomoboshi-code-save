@@ -1,0 +1,10 @@
+{
+  "description": "This app allows users to earn and manage virtual coins, enhancing engagement through rewards and incentives for various activities.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
