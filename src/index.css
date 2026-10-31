@@ -326,32 +326,15 @@ body {
 }
 
 .adventure-card {
-  position: relative;
-  min-height: 146px;
-  box-sizing: border-box;
-  padding: 0 0 14px;
-  overflow: hidden;
-  border: 1px solid #dfb83e;
-  border-radius: 24px;
-  background:
-    radial-gradient(circle at 100% 100%, rgb(245 197 66 / 19%), transparent 35%),
-    linear-gradient(145deg, #fffaf0, #fff0bd);
+  min-height: 117px;
+  padding: 12px;
+  border: 0.5px solid rgb(255 255 255 / 5%);
+  border-radius: 25px;
+  background: rgb(245 197 66 / 42%);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 82%),
-    inset 0 -3px 7px rgb(129 90 13 / 9%),
-    0 10px 22px rgb(74 55 14 / 15%);
-}
-
-.adventure-card::after {
-  position: absolute;
-  top: 0;
-  right: 18px;
-  left: 18px;
-  z-index: 2;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 32%), transparent);
-  content: '';
-  pointer-events: none;
+    inset 0 -4px 4px rgb(0 0 0 / 20%),
+    inset 0 2px 4px rgb(255 255 255 / 40%);
+  backdrop-filter: blur(5px);
 }
 
 .adventure-card p,
@@ -367,90 +350,38 @@ body {
   gap: 12px;
 }
 
-.adventure-card-header {
-  position: relative;
-  min-height: 51px;
-  box-sizing: border-box;
-  padding: 10px 13px 10px 15px;
-  overflow: hidden;
-  color: white;
-  background:
-    radial-gradient(circle at 88% 0, rgb(245 197 66 / 17%), transparent 36%),
-    linear-gradient(135deg, #29261d, #060605 72%);
-  box-shadow:
-    inset 0 -1px 0 rgb(255 255 255 / 8%),
-    0 4px 9px rgb(43 30 2 / 15%);
-}
-
-.adventure-card-header::after {
-  position: absolute;
-  top: -36px;
-  right: -25px;
-  width: 94px;
-  height: 94px;
-  border: 1px solid rgb(245 197 66 / 14%);
-  border-radius: 50%;
-  content: '';
-  pointer-events: none;
-}
-
 .adventure-card-header h2 {
-  position: relative;
-  z-index: 1;
   font-family: 'Inter:Semi Bold', sans-serif;
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 21px;
+  font-size: 16px;
+  line-height: normal;
 }
 
 .adventure-card-header > p {
-  position: relative;
-  z-index: 1;
   display: flex;
   flex: 0 0 auto;
   align-items: center;
-  gap: 4px;
-  padding: 5px 8px;
-  border: 1px solid rgb(245 197 66 / 24%);
-  border-radius: 999px;
-  color: #f5c542;
-  background: rgb(245 197 66 / 9%);
-  font-family: 'Inter:Medium', sans-serif;
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 14px;
-  backdrop-filter: blur(5px);
+  gap: 3px;
+  color: rgb(107 122 128 / 60%);
+  font-size: 12px;
 }
 
 .adventure-card-header img {
   width: 5px;
   height: 5px;
-  filter: sepia(1) saturate(4) brightness(1.32);
 }
 
 .adventure-card-description {
   margin-top: 13px;
-  padding: 0 15px;
-  color: #29261f;
-  font-family: 'Inter:Medium', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 15px;
+  line-height: 14px;
 }
 
 .adventure-card-footer {
-  margin: 13px 15px 0;
-  padding-top: 11px;
-  border-top: 1px solid rgb(145 112 34 / 17%);
-  font-family: 'Inter:Semi Bold', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: normal;
+  margin-top: 12px;
 }
 
 .adventure-card-footer p:last-child {
-  color: #8b8068;
-  font-size: 12px;
+  color: rgb(107 122 128 / 60%);
+  font-size: 13px;
 }
 
 .adventure-empty {
